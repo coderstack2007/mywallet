@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Spendings;
+use App\Models\Payment;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,9 +15,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $spendings = Spendings::all();
-         
-        return view('dashboards.dashboard', compact('spendings'));
+  
+        $payments = Payment::all();
+        
+        return view('dashboards.dashboard', compact('payments'));
     }
 
     /**

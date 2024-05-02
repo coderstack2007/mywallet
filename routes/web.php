@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SpendingController;
 use App\Http\Controllers\SpendingsController;
 use App\Models\Spendings;
@@ -29,15 +30,10 @@ Route::get('/', function () {
     return view('index');
 });
 
-
-#Spendings
-
-#House
-Route::get('house', [SpendingsController::class, 'house'])->name('house');
-Route::post('first', [SpendingsController::class, 'first'])->name('first');
-Route::post('second', [SpendingsController::class, 'second'])->name('second');
-
-#FoodAndDrinks
-Route::get('Food-and-Drinkd', [SpendingsController::class, 'food_and_drinks'])->name('foodanddrinks');
-#Education
-Route::get('Education', [SpendingsController::class, 'education'])->name('education');
+Route::get('/error', function(){
+    return view('error');
+});
+#Paymeny
+Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
+Route::get('users/{user}',[ PaymentController::class, 'window'])->name('window');
+Route::put('users/{user}/put',[PaymentController::class, 'process'])->name('process');

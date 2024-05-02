@@ -21,8 +21,10 @@ class User extends Authenticatable
         'username',
         'card',
         'email',
+        'balance',
         'photo',
-        'course',
+       
+        'total',
         'password',
     ];
 
@@ -46,8 +48,5 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function Spendings()
-    {
-        return $this->hasMany(Spendings::class);
-    }
+   
 }

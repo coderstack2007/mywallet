@@ -15,15 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('email');
-            $table->integer('card');
-            $table->integer('balance')->default('0');
-            $table->string('course')->nullable();
-            $table->text('photo')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('card');
+            $table->integer('balance');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
+     
     }
 
     /**
@@ -32,5 +30,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('cards');
     }
 };

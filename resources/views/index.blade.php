@@ -23,7 +23,7 @@
 </style>
 
 
- <h1>Welcome, To use the app MyWallet please login or register</h1><br>
+ <h1>Welcome to MyWallet app, please login or register</h1><br>
  <center>
       <a href="/login"><button>Log in</button></a>
       <a href="/register"><button>Register</button></a>

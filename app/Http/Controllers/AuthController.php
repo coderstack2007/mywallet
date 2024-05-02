@@ -31,7 +31,7 @@ class AuthController extends Controller
         }
         else {
 
-            return ("Error");
+            return ("<center><h1>Username or password is wrong!</h1> <hr> <a href='/'>Back to Authintication </a></center>");
         }
     
     }
@@ -40,16 +40,18 @@ class AuthController extends Controller
     {
         // $userid = auth()->user()->id;
         $confirm = $request->confirmpassword;
-        if(strlen($request->card) == 8)
+        if(strlen($request->card) == 19)
         {
             if($request->password == $confirm)
             {
+                $zero = 1000;
                 $users = User::create([
                     'username' => $request->username,
                     'email' => $request->email,
                     'card' => $request->card,
                     'password' => bcrypt($request->password),
-                    'course' => $request->course,
+                    
+                    'balance' => $zero,
                 ]);
         
                 auth()->login($users);
@@ -60,7 +62,7 @@ class AuthController extends Controller
             }
         }
         else{
-            echo "Card number must be exactly 8 digits long!" .  " " ."<a href='/register'>Go back</a>" ;
+            echo "Card number must be exactly 16 digits long!" .  " " ."<a href='/register'>Go back</a>" ;
         }
         
     

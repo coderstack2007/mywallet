@@ -5,7 +5,6 @@
 <body>
 
 
-
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -79,7 +78,7 @@
                   <form action="{{ route('dashboards.update', $user_id ) }}" method="POST" enctype="multipart/form-data" >
                     @csrf
                     @method('PUT')
-                    <div class="row mb-3">
+                    <!-- <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profil rasmi</label>
                       <div class="col-md-8 col-lg-9">
                         <div class="pt-2">
@@ -88,7 +87,7 @@
                           <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Ism</label>

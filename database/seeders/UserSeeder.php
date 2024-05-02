@@ -15,9 +15,8 @@ class UserSeeder extends Seeder
         $user = User::create([
             'username' => 'admin',
             'email' => 'a@',
-            'course' => 'rub',
             'balance' => '0',
-            'card' => '0000000000000000',
+            'card' => '0000 0000 0000 0000',
             'password' => password_hash('777', PASSWORD_DEFAULT),
         ]);
 

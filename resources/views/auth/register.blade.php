@@ -45,18 +45,12 @@
                       <input type="email" name="email" class="form-control" id="yourEmail" required>
                       <div class="invalid-feedback">Please enter a valid Email adddress!</div>
                     </div>
-                    <div class="col-12">
-                      <label for="yourEmail" class="form-label">Currency</label>
-                      <select id="course" name="course" class="form-control">
-                        <option value="">Select your course</option>
-                        <option value="rub">RUB</option>
-                        <option value="uzs">UZS</option>
-                        <!-- добавьте другие курсы по мере необходимости -->
-                    </select>
-                    </div>
+                    
                     <div class="col-12">
                       <label for="Your card number" class="form-label">Card number</label>
-                      <input type="number" name="card" class="form-control" maxlength="8" minlength="8" required>
+                      <input name="card" class="form-control"  type="text" id="cardNumberInput" oninput="formatCardNumber()" maxlength="19" required>
+
+                      
                       <div class="invalid-feedback">Please enter your card number!</div>
                     </div>
                   
@@ -72,7 +66,7 @@
                       <div class="invalid-feedback">Confirm your password!</div>
                     </div>
 
-
+                  <input type="hidden" name="balance" value="0">
                     
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Create Account</button>
@@ -100,4 +94,11 @@
 
   
 </body>
-
+<script>
+        function formatCardNumber() {
+            let input = document.getElementById('cardNumberInput');
+            let value = input.value.replace(/\D/g, '').substring(0, 16);
+            value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+            input.value = value;
+        }
+    </script>

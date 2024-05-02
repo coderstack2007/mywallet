@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('spendings', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->integer('cost');
-            $table->string('expenture');
-            $table->unsignedInteger('user_id');
+            $table->integer('amount');
+            $table->foreignId('user_id');
+            $table->foreignId('payer');
+            $table->string('card');
+            $table->boolean('negative');
+            $table->boolean('positive');
             $table->timestamps();
         });
-        
     }
 
     /**
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('spendings');
+        Schema::dropIfExists('payments');
     }
 };

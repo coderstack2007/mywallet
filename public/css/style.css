@@ -18,7 +18,15 @@ body {
   background: #f6f9ff;
   color: #444444;
 }
+.pay 
+{
 
+  border: 1px solid#4154f1 ;
+  color:#4154f1 ;
+  padding: 7px;
+  width: auto;
+  margin: 0 20px ; 
+}
 a {
   color: #4154f1;
   text-decoration: none;
@@ -248,6 +256,7 @@ h6 {
 
 .card-body {
   padding: 0 20px 20px 20px;
+ 
 }
 
 .card-img-overlay {
