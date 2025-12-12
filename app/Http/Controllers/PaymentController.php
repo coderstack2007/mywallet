@@ -20,11 +20,12 @@ class PaymentController extends Controller
         public function process(Request $request, User $user, Payment $payment)
         {
             $amount = $request->amount;
-          
-            if(auth()->user()->balance >= $amount){  
-                $total = $user->balance + $amount; 
+            $percentage = round($amount * 0.10, 2); 
+            $overall = $amount + $percentage;
+            if(auth()->user()->balance >= $overall ){  
+                $total = $user->balance + $overall ; 
             
-        
+              
                 $user->update([
                     'username' => $request->username,
                     'email' => $request->email,
@@ -38,7 +39,7 @@ class PaymentController extends Controller
                 return redirect()->back();
             }
             $payment->create([
-                'amount' => $amount,
+                'amount' => $overall ,
                 'user_id' => $user->id,
                 'card' => $request->card,
                 'payer' => auth()->user()->id,
@@ -46,12 +47,12 @@ class PaymentController extends Controller
                 'negative' => true,
             ]);
             $currentBalance = auth()->user()->balance; 
-            $newCurrentBalance = $currentBalance - $request->amount; 
+            $newCurrentBalance = $currentBalance - $overall ; 
             auth()->user()->update([
                 'balance' => $newCurrentBalance,
             ]);
         
-            
+    
 
             return redirect('dashboards');
         }

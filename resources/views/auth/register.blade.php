@@ -36,7 +36,7 @@
                     @csrf 
                     <div class="col-12">
                       <label for="yourName" class="form-label">Username</label>
-                      <input type="text" name="username" class="form-control" id="yourName" required>
+                      <input type="name" name="username" class="form-control" id="yourName" required>
                       <div class="invalid-feedback">Please, enter your name!</div>
                     </div>
 
@@ -46,13 +46,7 @@
                       <div class="invalid-feedback">Please enter a valid Email adddress!</div>
                     </div>
                     
-                    <div class="col-12">
-                      <label for="Your card number" class="form-label">Card number</label>
-                      <input name="card" class="form-control"  type="text" id="cardNumberInput" oninput="formatCardNumber()" maxlength="19" required>
-
-                      
-                      <div class="invalid-feedback">Please enter your card number!</div>
-                    </div>
+                
                   
 
                     <div class="col-12">

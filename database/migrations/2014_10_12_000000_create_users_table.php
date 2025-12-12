@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('email');
-            $table->string('card');
+            $table->string('card', 19);
             $table->integer('balance');
             $table->string('password');
             $table->rememberToken();

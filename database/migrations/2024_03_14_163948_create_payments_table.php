@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('amount');
             $table->foreignId('user_id');
-            $table->foreignId('payer');
             $table->string('card');
+            $table->foreignId('payer');
             $table->boolean('negative');
             $table->boolean('positive');
             $table->timestamps();

@@ -36,22 +36,42 @@ class AuthController extends Controller
     
     }
 
-    public function registersystem(Request $request, )
+    // Generating card
+    function generateCardNumber()
     {
+        // Первые 4 цифры фиксированы
+        $prefix = "8600";
+
+        // Генерируем оставшиеся 12 цифр
+        $randomDigits = '';
+        for ($i = 0; $i < 12; $i++) {
+            $randomDigits .= mt_rand(0, 9);
+        }
+
+     
+        // Форматируем как 8600_XXXX_XXXX_XXXX
+        return $prefix . ' ' .
+            substr($randomDigits, 0, 4). ' ' .
+            substr($randomDigits, 4, 4). ' ' .
+            substr($randomDigits, 8, 4). ' ' ;
+    }
+
+    public function registersystem(Request $request )
+    {
+       
         // $userid = auth()->user()->id;
         $confirm = $request->confirmpassword;
-        if(strlen($request->card) == 19)
-        {
+       
             if($request->password == $confirm)
             {
-                $zero = 1000;
+
+                $first_balance = 1000;
                 $users = User::create([
                     'username' => $request->username,
                     'email' => $request->email,
-                    'card' => $request->card,
+                    'card' => $this->generateCardNumber(),
                     'password' => bcrypt($request->password),
-                    
-                    'balance' => $zero,
+                    'balance' => $first_balance,
                 ]);
         
                 auth()->login($users);
@@ -61,12 +81,10 @@ class AuthController extends Controller
                 echo "passwords do not suit each other !" .  " " ."<a href='/register'>Go back</a>" ;
             }
         }
-        else{
-            echo "Card number must be exactly 16 digits long!" .  " " ."<a href='/register'>Go back</a>" ;
-        }
+      
         
+
     
-    }
     public function logout(Request $request) 
     {
         Auth::logout();
