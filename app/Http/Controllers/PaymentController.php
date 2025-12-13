@@ -10,6 +10,7 @@ class PaymentController extends Controller
 {
         public function payment(User $user)
         {
+
             $users = User::all();
             return view('payments.payment', compact('users'));
         }
@@ -19,9 +20,14 @@ class PaymentController extends Controller
         }
         public function process(Request $request, User $user, Payment $payment)
         {
+            // Expenses
             $amount = $request->amount;
-            $percentage = round($amount * 0.10, 2); 
-            $overall = $amount + $percentage;
+            $amount_with_percentage = round($amount * 0.10, 2); 
+            $overall = $amount + $amount_with_percentage;
+
+            // Profit
+            $profit = $user->balance + $amount;
+
             if(auth()->user()->balance >= $overall ){  
                 $total = $user->balance + $overall ; 
             
@@ -32,7 +38,8 @@ class PaymentController extends Controller
                     'card' => $request->card,
                     'password' => $request->password,
                     'balance' => $total,
-                    
+                    'expenses' => $overall,
+                    'profits' => $profit,       
                 ]);
             }
             else{
@@ -44,8 +51,9 @@ class PaymentController extends Controller
                 'card' => $request->card,
                 'payer' => auth()->user()->id,
                 'positive' => true,
-                'negative' => true,
+                'negative' => false,
             ]);
+            
             $currentBalance = auth()->user()->balance; 
             $newCurrentBalance = $currentBalance - $overall ; 
             auth()->user()->update([

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('card', 19);
             $table->integer('balance');
             $table->string('password');
+            $table->integer('profits')->default(0);
+            $table->integer('expenses')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

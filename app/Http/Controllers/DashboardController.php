@@ -15,10 +15,23 @@ class DashboardController extends Controller
      */
     public function index()
     {
-  
+        $user = auth()->user();
+
+       $profits = $user->profits ?? 0;
+    $expenses = $user->expenses ?? 0;
+
+    // Формируем массив для графика
+    $data = [
+        ['value' => $profits, 'name' => 'Profits'],
+        ['value' => $expenses, 'name' => 'Expenses'],
+    ];
+       
+
+      
+
         $payments = Payment::all();
         
-        return view('dashboards.dashboard', compact('payments'));
+        return view('dashboards.dashboard', compact('payments', 'data'));
     }
 
     /**

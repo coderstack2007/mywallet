@@ -23,7 +23,8 @@ class User extends Authenticatable
         'balance',
         'photo',
         'card',
-        'total',
+        'profits',
+        'expenses',
         'password',
     ];
 

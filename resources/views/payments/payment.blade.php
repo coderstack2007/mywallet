@@ -5,20 +5,14 @@
               
              
          
-         <table class="table">
-  <thead>
-
-  
-    <tr>
-   
-      <th scope="col">#</th>
-      <th scope="col">Имя</th>
-      <th scope="col">Карта</th>
-     
-
- 
-    </tr>
-  </thead>
+  <table class="table">
+      <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Карта</th>
+          </tr>
+      </thead>
   <tbody>
     <!-- Outlining of users -->
       @foreach($users as $user)
@@ -26,11 +20,7 @@
             <th scope="row">{{$user->id}}</th>
             <td><a  href="{{ route('window', ['user' => $user]) }}">{{$user->username}}</a></td>
             <td>{{$user->card}}</td>
-          
-        
-            
-          
-                
+   
           @endif
         
         @endforeach 
