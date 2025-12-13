@@ -27,10 +27,10 @@
                                 <input type="hidden" name="username" value="{{$user->username}}">
                                 <input type="hidden" name="email" value="{{$user->email}}">
                                 <input type="hidden" name="card" value="{{$user->card}}">
-                                <input type="hidden" name="course" value="{{$user->course}}">
+                               
                                 <input type="hidden" name="password" value="{{$user->password}}">
                                 <input type="hidden" name="expenses" value="{{ $user->expenses }}" >
-                                <input class="form-control text-uppercase" type="hidden" value="{{$user->username}}"> <span class="far fa-user">
+                                <span class="far fa-user">
                                 <div class="col-12">
                                         <div class="d-flex flex-column px-md-5 px-4 mb-4"> <span>Credit Card</span>
                                                 <div class="inputWithIcon"> <input class="form-control" type="text" value="{{$user->card}}"> <span class=""> <img src="https://www.freepnglogos.com/uploads/mastercard-png/mastercard-logo-logok-15.png" alt=""></span> </div>
