@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Fee;
+
 class AuthController extends Controller
 {
     public function login() 
@@ -56,16 +56,14 @@ class AuthController extends Controller
             substr($randomDigits, 8, 4). ' ' ;
     }
 
-    public function registersystem(Request $request )
+    public function registersystem(RegisterRequest $request )
     {
        
         // $userid = auth()->user()->id;
         $confirm = $request->confirmpassword;
        
-            if($request->password == $confirm)
-            {
-
-                $first_balance = 1000;
+            
+                $first_balance = 1000000 ;
                 $users = User::create([
                     'username' => $request->username,
                     'email' => $request->email,
@@ -75,11 +73,10 @@ class AuthController extends Controller
                 ]);
         
                 auth()->login($users);
-                return redirect()->intended('/dashboards/');
-            }
-            else{
-                echo "passwords do not suit each other !" .  " " ."<a href='/register'>Go back</a>" ;
-            }
+                return redirect('/dashboards/');
+
+            
+            
         }
       
         

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\PaymentRequest;
 class PaymentController extends Controller
 {
         public function payment(User $user)
@@ -18,53 +19,58 @@ class PaymentController extends Controller
         {
             return view('payments.window')->with(['user' => $user]);
         }
-        public function process(Request $request, User $user, Payment $payment)
-        {
-            // Expenses
-            $amount = $request->amount;
-            $amount_with_percentage = round($amount * 0.10, 2); 
-            $overall = $amount + $amount_with_percentage;
+       public function process(PaymentRequest $request, User $user)
+    {
+        $amount = $request->amount;
+        $amount_with_percentage = round($amount * 0.10, 2); 
+        $overall = $amount + $amount_with_percentage;
 
-            // Profit
-            $profit = $user->balance + $amount;
+        $profit = $user->balance + $amount;
 
-            if(auth()->user()->balance >= $overall ){  
-                $total = $user->balance + $overall ; 
-            
-              
+        try {
+            DB::transaction(function () use ($request, $user, $overall, $profit) {
+                if (auth()->user()->balance < $overall) {
+                    // выбрасываем исключение, чтобы откатить транзакцию
+                    throw new \Exception('Недостаточно средств');
+                }
+
+                // Обновляем получателя
                 $user->update([
                     'username' => $request->username,
-                    'email' => $request->email,
-                    'card' => $request->card,
+                    'email'    => $request->email,
+                    'card'     => $request->card,
                     'password' => $request->password,
-                    'balance' => $total,
-                    'expenses' => $overall,
-                    'profits' => $profit,       
+                    'balance'  => $user->balance + $overall,
+                    'expenses' => $request->expenses,
+                    'profits'  => $profit,
                 ]);
-            }
-            else{
-                return redirect()->back();
-            }
-            $payment->create([
-                'amount' => $overall ,
-                'user_id' => $user->id,
-                'card' => $request->card,
-                'payer' => auth()->user()->id,
-                'positive' => true,
-                'negative' => false,
-            ]);
-            
-            $currentBalance = auth()->user()->balance; 
-            $newCurrentBalance = $currentBalance - $overall ; 
-            auth()->user()->update([
-                'balance' => $newCurrentBalance,
-            ]);
-        
-    
+
+                // Создаём запись о платеже
+                Payment::create([
+                    'amount'   => $overall,
+                    'user_id'  => $user->id,
+                    'card'     => $request->card,
+                    'payer'    => auth()->user()->id,
+                    'positive' => true,
+                    'negative' => false,
+                ]);
+
+                // Списываем деньги у текущего пользователя
+                $currentBalance = auth()->user()->balance; 
+                $currentUserExpenses = auth()->user()->expenses;
+                $newCurrentBalance = $currentBalance - $overall; 
+                auth()->user()->update([
+                    'balance' => $newCurrentBalance,
+                    'expenses' => $overall +  $currentUserExpenses,
+                ]);
+            });
 
             return redirect('dashboards');
+        } catch (\Exception $e) {
+            // если ошибка — откат транзакции и возврат назад
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
-        
+    }
        
         
 }

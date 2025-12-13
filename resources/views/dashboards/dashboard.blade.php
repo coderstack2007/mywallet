@@ -1,14 +1,9 @@
 @extends('layout.main')
 @section('dashboard')
     
-
+  <link rel="stylesheet" href="{{ URL::asset('css/balance.css') }}">
   <main id="main" class="main">
-  <!-- @if (session('status'))
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        {{ session('status') }}
-    </div>
-@endif -->
+
 
     <div class="pagetitle">
       <h1>Dashboard </h1>
@@ -34,7 +29,10 @@
                     
                     <div class="ps-3">
                     <div style="display: flex; ">
-                      <h6 >{{ auth()->user()->balance }} </h6>
+                    <h6   class="balance-amount" data-balance="{{ auth()->user()->balance }}" style="margin: 0; letter-spacing: 0.5px; font-size: 34px;">
+
+                      {{ auth()->user()->balance }} 
+                  </h6> 
                       <p style="font-size: 20px; margin:0 10px;;"></p>
                     </div>
 
@@ -51,17 +49,21 @@
 
                
 
-                <div class="card-body" style=" width:max-content; " style=" width:max-content; " >
-                  <h5 class="card-title">PlasticCard </h5>
+               <div class="card-body" style="width:max-content;">
+                  <h5 class="card-title">PlasticCard</h5>
 
                   <div class="d-flex align-items-center">
-                   
-                    <div class="ps-3">
-                      <h6 >{{auth()->user()->card}}</h6>
-
-                    </div>
+                      <div class="ps-3">
+                          <h6 id="cardNumber" data-card="{{ auth()->user()->card }}">
+                              **** **** **** {{ substr(auth()->user()->card, -4) }}
+                          </h6>
+                      </div>
+                      <div class="ps-2">
+                          <!-- Иконка глаза -->
+                          <i id="toggleEye" class="fa fa-eye-slash" style="cursor:pointer;"></i>
+                      </div>
                   </div>
-                </div>
+              </div>
 
               </div>
               
@@ -164,86 +166,28 @@
 
         <!-- Right side columns -->
         <div class="col-lg-4">
-
-      
-
           <!-- Website Traffic -->
           <div class="card">
-       
-            <div class="card-body pb-0">
-              <h5 class="card-title">Website Traffic <span>| Today</span></h5>
-
-              <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
-            
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  echarts.init(document.querySelector("#trafficChart")).setOption({
-    tooltip: {
-      trigger: 'item'
-    },
-    legend: {
-      top: '5%',
-      left: 'center'
-    },
-    series: [{
-      name: 'Access From',
-      type: 'pie',
-      radius: ['40%', '70%'],
-      avoidLabelOverlap: false,
-      label: {
-        show: false,
-        position: 'center'
-      },
-      emphasis: {
-        label: {
-          show: true,
-          fontSize: '18',
-          fontWeight: 'bold'
-        }
-      },
-      labelLine: {
-        show: false
-      },
-      data: <?php echo json_encode($data); ?>
-    }]
-  });
-});
-</script>
-
-            </div>
-          </div><!-- End Website Traffic -->
-
-         
+              <div class="card-body pb-0">
+                <h5 class="card-title">Website Traffic <span>| Today</span></h5>
+                <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
+              </div>
+          </div>
+          <!-- End Website Traffic -->      
         </div><!-- End Right side columns -->
 
-      </div>
-    </section>
-    
-
-    
-                  
+    </div>
+  </section>
+</main><!-- End #main -->
 
 
-  </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
  
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+ <script>
+    window.chartData = @json($data);
+</script>
 
 </body>
 

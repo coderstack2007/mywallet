@@ -15,8 +15,8 @@ class RegisterRequest extends FormRequest
         return [
             'username' => ['required', 'string', 'min:3', 'max:50', 'unique:users,username'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'], 
-            // confirmed => проверяет поле password_confirmation
+            'password' => ['required', 'string',  'min:8', 'confirmed'],
+            
         ];
     }
 

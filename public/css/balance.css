@@ -1,0 +1,14 @@
+.balance-amount {
+
+
+letter-spacing: 0.5px;
+font-size: 58px;
+  color: #012970;
+  font-weight: 700;
+}
+
+.currency-symbol {
+    font-size: 0.9em;
+    margin-left: 4px;
+    color: #666;
+}

@@ -198,4 +198,9 @@ return [
 
     'same_site' => 'lax',
 
+
+    // Время сессия 
+    'lifetime' => 3, // время жизни сессии в минутах
+    'expire_on_close' => true,
+
 ];

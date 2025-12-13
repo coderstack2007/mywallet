@@ -25,11 +25,13 @@
   <link href="{{ URL::asset('css/quill.bubble.css') }}" rel="stylesheet">
   <link href="{{ URL::asset('css/remixicon.css') }}" rel="stylesheet">
   <link href="{{ URL::asset('css/dstyle.css') }}" rel="stylesheet">
+  <link href="{{ URL::asset('css/window.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
   <!-- Template Main CSS File -->
 
   <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
+
 </head>
 
 <body>
@@ -41,13 +43,7 @@
 
    
 
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
-
+  
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
@@ -151,7 +147,8 @@
 @endif
 
 @yield('dashboard')
-
+  <script src="{{ asset('js/dashboard.js') }}"></script>
+  <script src="{{ asset('js/amount.js') }}"></script>
   <script src="{{ asset('js/main.js') }}"></script>
   <script src="{{ asset('js/apexcharts.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
