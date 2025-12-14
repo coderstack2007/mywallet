@@ -23,26 +23,21 @@
                     @csrf
                     @method('PUT')
                         <div class="row">
-                               
-                                <input type="hidden" name="username" value="{{$user->username}}">
+                           <input type="hidden" name="username" value="{{$user->username}}">
                                 <input type="hidden" name="email" value="{{$user->email}}">
                                 <input type="hidden" name="card" value="{{$user->card}}">
-                                <input type="hidden" name="course" value="{{$user->course}}">
+ 
                                 <input type="hidden" name="password" value="{{$user->password}}">
                                 <input type="hidden" name="expenses" value="{{ $user->expenses }}" >
-                                <input class="form-control text-uppercase" type="hidden" value="{{$user->username}}"> <span class="far fa-user">
+                             <span class="far fa-user">
                                 <div class="col-12">
-                                        <div class="d-flex flex-column px-md-5 px-4 mb-4"> <span>Credit Card</span>
-                                                <div class="inputWithIcon"> <input class="form-control" type="text" value="{{$user->card}}"> <span class=""> <img src="https://www.freepnglogos.com/uploads/mastercard-png/mastercard-logo-logok-15.png" alt=""></span> </div>
+                                        <div class="d-flex flex-column px-md-5 px-4 mb-4"> 
+                                                <div class="inputWithIcon"> {{ $user->card}} <span class=""> <img src="https://www.freepnglogos.com/uploads/mastercard-png/mastercard-logo-logok-15.png" alt=""></span> </div>
                                         </div>
                                 </div>
-                                <div class="col-md-6">
-                                        <div class="d-flex flex-column ps-md-5 px-md-0 px-4 mb-4"> </span>
-                                                <div class="inputWithIcon"> <span class="fas fa-calendar-alt"></span> </div>
-                                        </div>
-                                </div>
+                                
                              <div class="col-12">
-                                <div class="d-flex flex-column px-md-5 px-4 mb-4">
+                                <div class="d-flex flex-column px-md-5 px-4 ">
                                         <span>Amount</span>
                                         <div class="inputWithIcon">
                                         <input id="amountInput" 
@@ -54,7 +49,7 @@
                                         </div>
                                         <!-- Сообщение об ошибке -->
                                         <small id="balanceError" style="color:red; font-size:12px; display:none;">
-                                        Недостаточно средств на карте
+                                                Недостаточно средств на карте
                                         </small>
                                         
                                         <!-- Ошибка при сумме меньше 500 -->
@@ -66,7 +61,7 @@
                                 </div>
 
                                 <div class="col-12">
-                                        <div class="d-flex flex-column px-md-5 px-4 mb-4"> <span>Name</span>
+                                        <div class="d-flex flex-column px-md-5 px-4 mb-4 "> <span>Name</span>
                                                 <div class="inputWithIcon"> {{$user->username}}</span> </div>
                                         </div>
                                 </div>

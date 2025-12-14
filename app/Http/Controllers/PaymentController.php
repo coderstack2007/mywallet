@@ -41,7 +41,7 @@ class PaymentController extends Controller
                     'card'     => $request->card,
                     'password' => $request->password,
                     'balance'  => $user->balance + $overall,
-                    'expenses' => $request->expenses,
+             
                     'profits'  => $profit,
                 ]);
 
