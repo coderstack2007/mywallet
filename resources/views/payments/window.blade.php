@@ -26,10 +26,24 @@
                            <input type="hidden" name="username" value="{{$user->username}}">
                                 <input type="hidden" name="email" value="{{$user->email}}">
                                 <input type="hidden" name="card" value="{{$user->card}}">
+<<<<<<< HEAD
  
                                 <input type="hidden" name="password" value="{{$user->password}}">
                                 <input type="hidden" name="expenses" value="{{ $user->expenses }}" >
                              <span class="far fa-user">
+=======
+
+                               
+                                <input type="hidden" name="password" value="{{$user->password}}">
+                                <input type="hidden" name="expenses" value="{{ $user->expenses }}" >
+                                <span class="far fa-user">
+
+ 
+                                <input type="hidden" name="password" value="{{$user->password}}">
+                                <input type="hidden" name="expenses" value="{{ $user->expenses }}" >
+                             <span class="far fa-user">
+
+>>>>>>> temp-branch
                                 <div class="col-12">
                                         <div class="d-flex flex-column px-md-5 px-4 mb-4"> 
                                                 <div class="inputWithIcon"> {{ $user->card}} <span class=""> <img src="https://www.freepnglogos.com/uploads/mastercard-png/mastercard-logo-logok-15.png" alt=""></span> </div>
