@@ -1,28 +1,28 @@
-    <?php
+<?php
 
-    namespace Tests\Feature;
+namespace Tests\Feature;
 
-    use Tests\TestCase;
-    use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-    class RegisterViewTest extends TestCase
+class RegisterViewTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_register_page_is_accessible()
     {
-        use RefreshDatabase;
+        // Act
+        $response = $this->get('/register');
 
-        public function test_register_page_is_accessible()
-        {
-            // Act
-            $response = $this->get('/register');
-
-            // Assert
-            $response->assertStatus(200);
-            $response->assertViewIs('auth.register');
-        }
-
-        public function test_register_page_has_correct_route_name()
-        {
-            // Act & Assert
-            $this->get(route('register'))
-                ->assertStatus(200);
-        }
+        // Assert
+        $response->assertStatus(200);
+        $response->assertViewIs('auth.register');
     }
+
+    public function test_register_page_has_correct_route_name()
+    {
+        // Act & Assert
+        $this->get(route('register'))
+            ->assertStatus(200);
+    }
+}
