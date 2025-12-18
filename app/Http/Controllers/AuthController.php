@@ -53,14 +53,14 @@ class AuthController extends Controller
         return $prefix . ' ' .
             substr($randomDigits, 0, 4). ' ' .
             substr($randomDigits, 4, 4). ' ' .
-            substr($randomDigits, 8, 4). ' ' ;
+            substr($randomDigits, 8, 4) ;
     }
 
     public function registersystem(RegisterRequest $request )
     {
        
         // $userid = auth()->user()->id;
-        $confirm = $request->confirmpassword;
+        
        
             
                 $first_balance = 1000000 ;
@@ -73,6 +73,7 @@ class AuthController extends Controller
                 ]);
         
                 auth()->login($users);
+                $request->session()->regenerate();
                 return redirect('/dashboards/');
 
             
