@@ -247,18 +247,12 @@ public function test_user_is_logged_in_after_registration()
         // Проверяем состояние
         $this->assertAuthenticated();
         
-        // Проверяем пользователя в базе
-        $user = User::first();
-        if ($user) {
-            echo "\nUser created with ID: " . $user->id;
-            echo "\nCard number: " . $user->card;
-            echo "\nBalance: " . $user->balance;
-        }
         
         // Если есть ошибки валидации, покажем их
         if (session()->has('errors')) {
             echo "\nValidation errors: ";
             print_r(session('errors')->all());
         }
+        
     }
 }

@@ -33,7 +33,7 @@ Route::get('/', function () {
 Route::get('/error', function(){
     return view('error');
 });
-#Paymeny
+#Payment
 Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
 Route::get('users/{user}',[ PaymentController::class, 'window'])->name('window');
 Route::put('users/{user}/put',[PaymentController::class, 'process'])->name('process');
