@@ -1,199 +1,72 @@
-# 💳 Wallet — Laravel Payment App
+# 💳 MyWallet
 
-Laravel 10 приложение для управления платежами и балансом пользователей. Полностью контейнеризировано через Docker.
+Учебный мини-сервис оплат на Laravel. Имитирует базовую логику кошелька и транзакций — **без интеграции с реальными платёжными системами**.
 
----
+## ⚠️ Дисклеймер
 
-## 🛠 Стек технологий
+Это демонстрационный/учебный проект. Реальные деньги, банковские карты или платёжные шлюзы (Stripe, Payme, Click и т.д.) не используются. Все операции — симуляция для отработки логики баланса, транзакций и API.
 
-- **PHP 8.2** + **Laravel 10**
-- **MySQL 8.0**
-- **Nginx** (alpine)
-- **phpMyAdmin**
-- **Docker** + **Docker Compose**
+## 🧰 Стек
 
----
+- PHP + Laravel
+- MySQL
+- REST API
+- Docker
 
-## 📁 Структура проекта
+## ✨ Функциональность
 
-```
-mywallet/
-├── app/
-│   ├── Http/Controllers/
-│   │   ├── AuthController.php       # Регистрация, вход, выход
-│   │   ├── DashboardController.php  # Дашборд, профиль, пароль
-│   │   └── PaymentController.php    # Платежи между пользователями
-│   └── Models/
-│       ├── User.php
-│       └── Payment.php
-├── database/
-│   ├── migrations/                  # users, payments таблицы
-│   └── seeders/
-│       └── UserSeeder.php           # Тестовый admin пользователь
-├── docker/
-│   ├── entrypoint.sh                # Авто-миграции при старте
-│   ├── nginx/default.conf
-│   ├── php/local.ini
-│   └── mysql/my.cnf
-├── Dockerfile
-├── docker-compose.yml
-└── Makefile
-```
-
----
-
-## 🚀 Быстрый старт
-
-### 1. Клонировать репозиторий
-
-```bash
-git clone https://github.com/coderstack2007/adminpanel.git mywallet
-cd mywallet
-```
-
-### 2. Настроить окружение
-
-```bash
-cp .env.example .env
-```
-
-Обязательно установить в `.env`:
-
-```env
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=Wallet
-DB_USERNAME=root
-DB_PASSWORD=root
-```
-
-> ⚠️ `DB_HOST` должен быть `mysql` (имя сервиса Docker), а не `127.0.0.1`
-
-### 3. Собрать и запустить
-
-```bash
-make build    # сборка Docker образов
-make up       # запуск контейнеров
-```
-
-### 4. Первичная настройка БД
-
-```bash
-make fresh    # migrate:fresh + seed
-```
-
-Создаётся тестовый пользователь:
-- **username:** `admin`
-- **password:** `777`
-
----
-
-## 🌐 Адреса
-
-| Сервис       | URL                          |
-|--------------|------------------------------|
-| Приложение   | http://localhost:8080        |
-| phpMyAdmin   | http://localhost:8081        |
-| MySQL (хост) | `127.0.0.1:3307`             |
-
----
-
-## ⚙️ Makefile команды
-
-```bash
-make build        # Собрать Docker образы
-make up           # Запустить контейнеры
-make down         # Остановить контейнеры
-make restart      # Перезапустить
-
-make migrate      # php artisan migrate
-make seed         # php artisan db:seed
-make fresh        # migrate:fresh --seed (⚠ дропает все таблицы)
-
-make test         # Запустить тесты (PHPUnit)
-make lint         # Laravel Pint (форматирование кода)
-
-make shell        # Bash внутри контейнера app
-make tinker       # Laravel Tinker
-
-make cache-clear  # Очистить все кэши Laravel
-make logs         # Логи всех контейнеров
-```
-
----
-
-## 💡 Функциональность
-
-### Аутентификация
-- Регистрация с автогенерацией номера карты (`8600 XXXX XXXX XXXX`)
-- Вход / выход
-- Начальный баланс при регистрации: **1 000 000**
-
-### Платежи
+- Регистрация/авторизация пользователя
+- Баланс кошелька
+- Пополнение баланса (симуляция)
 - Перевод средств между пользователями
-- Комиссия **10%** с каждого платежа
-- Транзакции через `DB::transaction` (откат при ошибке)
-- Проверка достаточности баланса
+- История транзакций
 
-### Профиль
-- Обновление username, email, фото
-- Смена пароля с проверкой текущего
+## 🚀 Установка
 
-### Дашборд
-- График доходов и расходов
-- История всех платежей
-
----
-
-## 🗄 База данных
-
-### Таблица `users`
-
-| Поле       | Тип          | Описание              |
-|------------|--------------|-----------------------|
-| id         | bigint       | Primary key           |
-| username   | varchar(255) | Имя пользователя      |
-| email      | varchar(255) | Email                 |
-| card       | varchar(19)  | Номер карты           |
-| balance    | int          | Текущий баланс        |
-| profits    | int          | Сумма входящих        |
-| expenses   | int          | Сумма исходящих       |
-| password   | varchar(255) | Хэш пароля            |
-
-### Таблица `payments`
-
-| Поле     | Тип     | Описание                    |
-|----------|---------|-----------------------------|
-| id       | bigint  | Primary key                 |
-| amount   | int     | Сумма (с комиссией)         |
-| user_id  | bigint  | Получатель (FK → users)     |
-| card     | string  | Карта получателя            |
-| payer    | bigint  | Отправитель (FK → users)    |
-| positive | boolean | Входящий платёж             |
-| negative | boolean | Исходящий платёж            |
-
----
-
-## 🔧 Решение проблем
-
-**Connection refused / не подключается к MySQL**
 ```bash
-# Убедись что DB_HOST=mysql в .env, затем:
-make down && make up
-# подождать 15 секунд
-make fresh
+git clone https://github.com/asilbekerdonov/mywallet.git
+cd mywallet
+
+composer install
+cp .env.example .env
+php artisan key:generate
+
+# настроить DB_* в .env под свою MySQL
+php artisan migrate
+
+php artisan serve
 ```
 
-**Ошибка при сборке (composer)**
+Приложение будет доступно на `http://localhost:8000`.
+
+## ⚙️ Переменные окружения
+
+| Переменная | Описание |
+|---|---|
+| `DB_CONNECTION` | `mysql` |
+| `DB_HOST` | хост базы данных |
+| `DB_PORT` | `3306` |
+| `DB_DATABASE` | имя базы данных |
+| `DB_USERNAME` | пользователь БД |
+| `DB_PASSWORD` | пароль БД |
+
+## 📡 API
+
+| Метод | Путь | Описание |
+|---|---|---|
+| `POST` | `/api/register` | регистрация пользователя |
+| `POST` | `/api/login` | авторизация |
+| `GET` | `/api/wallet` | получить баланс |
+| `POST` | `/api/wallet/topup` | пополнить баланс (симуляция) |
+| `POST` | `/api/wallet/transfer` | перевод между пользователями |
+| `GET` | `/api/wallet/transactions` | история операций |
+
+## 🧪 Тесты
+
 ```bash
-make down
-docker volume rm mywallet_wallet_mysql_data
-make build
-make up
+php artisan test
 ```
 
-**Таблица уже существует**
-```bash
-docker volume rm mywallet_wallet_mysql_data
-make up && make fresh
-```
+## 📄 Лицензия
+
+MIT
